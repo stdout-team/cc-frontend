@@ -5,9 +5,10 @@ const {CheckableTag} = Tag;
 
 interface TagsGroup {
     tagsData: string[]
+    withSwipe?: boolean
 }
 
-export const TagsGroup = ({tagsData}: TagsGroup) => {
+export const TagsGroup = ({tagsData, withSwipe}: TagsGroup) => {
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [tags, setTags] = useState<string[]>(tagsData);
     const handleChange = (tag: string, checked: boolean) => {
@@ -15,13 +16,15 @@ export const TagsGroup = ({tagsData}: TagsGroup) => {
             ? [tag, ...selectedTags]
             : selectedTags.filter((t) => t !== tag);
         setSelectedTags(nextSelectedTags);
-        checked ? setTags([tag, ...tags.filter(value => value !== tag)]) :
-            setTags([...tags.filter(value => value !== tag), tag]);
+        if (withSwipe) {
+            checked ? setTags([...selectedTags, tag, ...tags.filter(value => value !== tag && !selectedTags.includes(value))]) :
+                setTags([...tags.filter(value => value !== tag), tag]);
+        }
     };
 
     return (
         <>
-            <Space size={[4,8]} wrap>
+            <Space size={[4, 8]} wrap>
                 {tags.map((tag) => (
                     <CheckableTag
                         key={tag}
@@ -36,14 +39,3 @@ export const TagsGroup = ({tagsData}: TagsGroup) => {
     );
 };
 
-//
-// const CheckableTagStyled = styled(CheckableTag)`
-//   color: black;
-//   display: flex;
-//   padding: 1px 8px;
-//   align-items: center;
-//   gap: 3px;
-//   border-radius: 2px;
-//   border: 1px solid #F5F5F5;
-//   background: #F5F5F5;
-// `
