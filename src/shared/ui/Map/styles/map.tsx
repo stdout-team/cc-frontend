@@ -2,6 +2,7 @@ import {load} from '@2gis/mapgl';
 import React, {Dispatch, ReactElement, useEffect} from "react";
 import {renderToStaticMarkup} from "react-dom/server";
 import {Map} from "@2gis/mapgl/types";
+import styled from "styled-components";
 
 interface Popup {
     position: [number, number];
@@ -21,12 +22,23 @@ interface MapProps {
 const MapContext = React.createContext<[Map | undefined, Dispatch<React.SetStateAction<Map | undefined>>]>([undefined, () => {
 }]);
 
+const MapContainer = styled.div`
+  & {
+    display: block;
+
+  }
+
+  & > div:first-child {
+    display: none;
+  }
+`;
+
 export const MapProvider = (props: MapProps) => {
     const [mapInstance, setMapInstance] = React.useState<Map | undefined>();
     useMap(props)
     return (
         <MapContext.Provider value={[mapInstance, setMapInstance]}>
-            <div id='map-container' style={{width: props.width, height: props.height}}/>
+            <MapContainer id='map-container' style={{width: props.width, height: props.height}}/>
         </MapContext.Provider>
     );
 };
