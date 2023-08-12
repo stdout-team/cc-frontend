@@ -6,7 +6,7 @@ export const FooterWidget = () => {
     return (
 
         <Row justify="center" style={{margin: "21px 0 45px 0"}}>
-            <Col span={17}>
+            <Col span={18} offset={1}>
                 <Divider/>
                 <Text>Привет, Екатеринбург!</Text>
             </Col>

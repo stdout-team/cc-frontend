@@ -12,8 +12,8 @@ const disabledDate: RangePickerProps['disabledDate'] = (current) => {
 export const EventWidget = () => {
     return (
 
-        <Row justify="center">
-            <Col span={18} offset={1}>
+        <Row>
+            <Col>
                 <Space direction="vertical" size={24}>
                     <Row>
                         <Col>
