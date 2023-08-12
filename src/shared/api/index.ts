@@ -14,52 +14,52 @@ const baseQuery = fetchBaseQuery({
         return headers;
     },
 });
-const customBaseQuery: BaseQueryFn<
-    string | FetchArgs,
-    unknown,
-    FetchBaseQueryError
-> = async (args, api, extraOptions) => {
-    await mutex.waitForUnlock();
-    let result = await baseQuery(args, api, extraOptions);
-    if (result.error?.status === 401) {
-        if (!mutex.isLocked()) {
-            const release = await mutex.acquire();
-            try {
-                const refreshToken = getToken({type: "refreshToken"});
-                if (!refreshToken) {
-                    window.location.href = '/login';
-                }
-                const refreshResult = await baseQuery(
-                    {url: '/refresh', method: "post", body: {refreshToken: refreshToken}},
-                    api,
-                    extraOptions
-                );
-                const data = refreshResult.data as RefreshTokenResponse;
-                if (data) {
-                    const {setAuth} = loginSlice.actions;
-                    setToken({type: "token", value: data.token});
-                    api.dispatch(setAuth(true));
-                    result = await baseQuery(args, api, extraOptions);
-                } else {
-                    setToken({type: "token", value: ""});
-                    setToken({type: "refreshToken", value: ""});
-                    window.location.href = '/login';
-                }
-            } finally {
-                release();
-            }
-        } else {
-            await mutex.waitForUnlock();
-            result = await baseQuery(args, api, extraOptions);
-        }
-    }
-
-    return result;
-};
+// const customBaseQuery: BaseQueryFn<
+//     string | FetchArgs,
+//     unknown,
+//     FetchBaseQueryError
+// > = async (args, api, extraOptions) => {
+//     await mutex.waitForUnlock();
+//     let result = await baseQuery(args, api, extraOptions);
+//     if (result.error?.status === 401) {
+//         if (!mutex.isLocked()) {
+//             const release = await mutex.acquire();
+//             try {
+//                 const refreshToken = getToken({type: "refreshToken"});
+//                 if (!refreshToken) {
+//                     window.location.href = '/login';
+//                 }
+//                 const refreshResult = await baseQuery(
+//                     {url: '/refresh', method: "post", body: {refreshToken: refreshToken}},
+//                     api,
+//                     extraOptions
+//                 );
+//                 const data = refreshResult.data as RefreshTokenResponse;
+//                 if (data) {
+//                     const {setAuth} = loginSlice.actions;
+//                     setToken({type: "token", value: data.token});
+//                     api.dispatch(setAuth(true));
+//                     result = await baseQuery(args, api, extraOptions);
+//                 } else {
+//                     setToken({type: "token", value: ""});
+//                     setToken({type: "refreshToken", value: ""});
+//                     window.location.href = '/login';
+//                 }
+//             } finally {
+//                 release();
+//             }
+//         } else {
+//             await mutex.waitForUnlock();
+//             result = await baseQuery(args, api, extraOptions);
+//         }
+//     }
+//
+//     return result;
+// };
 
 export const commonApi = createApi({
     reducerPath: 'api',
     tagTypes: [],
-    baseQuery: customBaseQuery,
+    baseQuery: baseQuery,
     endpoints: _ => ({}),
 });

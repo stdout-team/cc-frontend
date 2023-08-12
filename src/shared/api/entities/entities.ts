@@ -1,4 +1,4 @@
-export type orderBy = "popularity" | "nearby"
+export type orderBy = "orderByPopularity" | "orderByNearby"
 
 export interface Base {
     timestamp: string
@@ -6,8 +6,8 @@ export interface Base {
 
 export interface EventsRequest {
     interests: string
-    dateMin: string
-    dateMax: string
+    minDate: string
+    maxDate: string
     orderBy: orderBy
     lat?: number
     lon?: number

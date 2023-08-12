@@ -6,7 +6,7 @@ export const Events = commonApi.injectEndpoints({
         getEvents: build.query<EventsResponse, EventsRequest>({
             queryFn: async (arg, api, extraOptions, fetchWithBQ) => {
                 const {orderBy, lat, lon} = arg;
-                if (orderBy == "nearby" && (!lat || !lon)) {
+                if (orderBy == "orderByNearby" && (!lat || !lon)) {
                     return {error: {status: 500, statusText: "", data: ""}}
                 }
                 const result = await fetchWithBQ({
