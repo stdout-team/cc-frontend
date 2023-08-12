@@ -5,18 +5,10 @@ import {
 } from '@reduxjs/toolkit/query/react';
 
 //
-export const BASE_URL = process.env['NEXT_PUBLIC_BASE_URL'];
+export const BASE_URL = process.env['NEXT_PUBLIC_BASE_URL'] || 'http://82.148.18.101:8084/v1';
 //
 const baseQuery = fetchBaseQuery({
-    baseUrl: BASE_URL,
-    mode: "no-cors",
-    prepareHeaders: headers => {
-        headers.set('Access-Control-Allow-Credentials', 'true');
-        headers.set('Access-Control-Allow-Origin', '*');
-        headers.set('Access-Control-Allow-Methods','GET,HEAD,PUT,PATCH,POST,DELETE')
-        headers.set('Content-Type', 'application/json;charset=UTF-8');
-        return headers;
-    },
+    baseUrl: BASE_URL
 });
 // const customBaseQuery: BaseQueryFn<
 //     string | FetchArgs,

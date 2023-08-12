@@ -5,15 +5,14 @@ export const Events = commonApi.injectEndpoints({
     endpoints: build => ({
         getEvents: build.query<EventsResponse, EventsRequest>({
             queryFn: async (arg, api, extraOptions, fetchWithBQ) => {
-                const {orderBy, lat, lon} = arg;
+                const {orderBy, lat, lon, interests} = arg;
                 if (orderBy == "orderByNearby" && (!lat || !lon)) {
                     return {error: {status: 500, statusText: "", data: ""}}
                 }
                 const result = await fetchWithBQ({
                     url: '/events',
                     method: 'GET',
-                    mode:'no-cors',
-                    params: arg
+                    params: {...arg, interests: interests?.join(',') || ''}
                 });
                 const data = result.data as EventsResponse;
                 if (result.error) return {error: result.error};
