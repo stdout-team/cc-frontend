@@ -35,7 +35,7 @@ export const EventWidget = () => {
             <Row gutter={[21, 24]}>
                 {[1, 2, 3, 4, 5, 6, 7].map((value) => <Col key={value + 1}> <Card key={value} date={"любое время"}
                                                                                   place={"Ельцин центр"}
-                                                                                  tags={["жопа", "член"]}
+                                                                                  tags={["искусство"]}
                                                                                   title={"Музей"}
                                                                                   imgLink={""}/></Col>)}
 
