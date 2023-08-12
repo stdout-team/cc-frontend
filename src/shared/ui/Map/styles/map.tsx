@@ -2,7 +2,6 @@ import {load} from '@2gis/mapgl';
 import React, {Dispatch, ReactElement, useEffect} from "react";
 import {renderToStaticMarkup} from "react-dom/server";
 import {Map} from "@2gis/mapgl/types";
-import styled from "styled-components";
 
 interface Popup {
     position: [number, number];
@@ -12,7 +11,7 @@ interface Popup {
 interface MapProps {
     id: string;
     center: [number, number];
-    key: string;
+    gisKey: string;
     zoom: number;
     popups: Popup[];
     width: string;
@@ -22,50 +21,44 @@ interface MapProps {
 const MapContext = React.createContext<[Map | undefined, Dispatch<React.SetStateAction<Map | undefined>>]>([undefined, () => {
 }]);
 
-const MapContainer = styled.div`
-  & {
-    display: block;
-
-  }
-
-  & > div:first-child {
-    display: none;
-  }
-`;
 
 export const MapProvider = (props: MapProps) => {
     const [mapInstance, setMapInstance] = React.useState<Map | undefined>();
     useMap(props)
     return (
         <MapContext.Provider value={[mapInstance, setMapInstance]}>
-            <MapContainer id='map-container' style={{width: props.width, height: props.height}}/>
+            <div id='map-container' style={{width: props.width, height: props.height}}/>
         </MapContext.Provider>
     );
 };
 
 
-export const useMap = ({center, zoom, popups, key}: MapProps) => {
-    const [mapInstance, setMapInstance] = React.useContext(MapContext);
+export const useMap = ({center, zoom, popups, gisKey}: MapProps) => {
+    const [_, setMapInstance] = React.useContext(MapContext);
     useEffect(() => {
         if (typeof window === 'undefined') return
         let map: Map;
         load().then((mapAPI) => {
-            map = new mapAPI.Map('map-container', {
-                center: center,
-                zoom: zoom,
-                key: key,
-            });
-            popups.map((popup) => {
-                new mapAPI.HtmlMarker(map, {
-                    coordinates: popup.position,
-                    html: renderToStaticMarkup(popup.component),
+            setTimeout(() => {
+                if (map) map.destroy()
+                map = new mapAPI.Map('map-container', {
+                    center: center,
+                    zoom: zoom,
+                    key: gisKey,
                 });
-            })
-            setMapInstance(map)
+
+                popups.map((popup) => {
+                    new mapAPI.HtmlMarker(map, {
+                        coordinates: popup.position,
+                        html: renderToStaticMarkup(popup.component),
+                    });
+                })
+                setMapInstance(map)
+            }, 0)
         });
 
         return () => {
-            mapInstance && mapInstance.destroy();
+            map && map.destroy();
         }
     }, []);
 
