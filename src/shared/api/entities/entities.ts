@@ -6,8 +6,8 @@ export interface Base {
 
 export interface EventsRequest {
     interests: string
-    dateMin: Date
-    dateMax: Date
+    dateMin: string
+    dateMax: string
     orderBy: orderBy
     lat?: number
     lon?: number
