@@ -12,6 +12,7 @@ export const Events = commonApi.injectEndpoints({
                 const result = await fetchWithBQ({
                     url: '/events',
                     method: 'GET',
+                    mode:'no-cors',
                     params: arg
                 });
                 const data = result.data as EventsResponse;
