@@ -1,14 +1,15 @@
 import {Space, Tag} from 'antd';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const {CheckableTag} = Tag;
 
 interface TagsGroup {
     tagsData: string[]
     withSwipe?: boolean
+    onChange?: (e: string[]) => void
 }
 
-export const TagsGroup = ({tagsData, withSwipe}: TagsGroup) => {
+export const TagsGroup = ({tagsData, withSwipe, onChange}: TagsGroup) => {
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [tags, setTags] = useState<string[]>(tagsData);
     const handleChange = (tag: string, checked: boolean) => {
@@ -21,6 +22,11 @@ export const TagsGroup = ({tagsData, withSwipe}: TagsGroup) => {
                 setTags([...tags.filter(value => value !== tag), tag]);
         }
     };
+    useEffect(() => {
+        if (selectedTags.length !== 0 && onChange) {
+            onChange(selectedTags);
+        }
+    }, [selectedTags])
 
     return (
         <>
