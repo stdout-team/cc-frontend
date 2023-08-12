@@ -1,1 +1,1 @@
-export {PopupCard} from './styles/cardOnMap';
+export {PopupCard} from './styles/popupCard';
