@@ -34,9 +34,10 @@ export const MapProvider = (props: MapProps) => {
 
 
 export const useMap = ({center, zoom, popups, gisKey}: MapProps) => {
-    const [_, setMapInstance] = React.useContext(MapContext);
+    const [mapInstance, setMapInstance] = React.useContext(MapContext);
     useEffect(() => {
         if (typeof window === 'undefined') return
+        if (mapInstance) return
         let map: Map;
         load().then((mapAPI) => {
             setTimeout(() => {

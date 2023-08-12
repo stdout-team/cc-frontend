@@ -1,7 +1,8 @@
 import {Space, Tag, Typography} from 'antd';
 import styled from "styled-components";
 
-interface Card {
+export interface CardProps {
+    id?: string
     date: string
     place: string
     tags: string[]
@@ -10,9 +11,9 @@ interface Card {
 }
 
 const {Title, Text} = Typography;
-export const Card = ({date, place, tags, title, imgLink}: Card) => {
+export const Card = ({id, date, place, tags, title, imgLink}: CardProps) => {
     return (
-        <CardStyled>
+        <CardStyled id={id}>
             <CardCover img={imgLink}/>
             <CardBody>
                 <Title style={{margin: 0}} level={5}>{title}</Title>
