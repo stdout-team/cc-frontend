@@ -1,5 +1,3 @@
-import TagsGroup from "@/shared/ui/TagsGroup";
-import Card from "@/shared/ui/Card";
 import EventWidget from "@/widgets/EventWidget";
 import FooterWidget from "@/widgets/FooterWidget";
 import HeaderWidget from "@/widgets/HeaderWidget";
@@ -10,8 +8,8 @@ export default function Home() {
         <>
 
             <HeaderWidget/>
-            <Row align="middle">
-                <Col offset={2}>
+            <Row>
+                <Col>
                     <EventWidget/>
                 </Col>
             </Row>
