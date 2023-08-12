@@ -4,9 +4,9 @@ import {
     fetchBaseQuery, FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
 
-
+//
 export const BASE_URL = process.env['NEXT_PUBLIC_BASE_URL'];
-
+//
 const baseQuery = fetchBaseQuery({
     baseUrl: BASE_URL,
     mode: "no-cors",
