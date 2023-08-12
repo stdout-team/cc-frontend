@@ -9,6 +9,7 @@ export const BASE_URL = process.env['NEXT_PUBLIC_BASE_URL'];
 
 const baseQuery = fetchBaseQuery({
     baseUrl: BASE_URL,
+    mode:"no-cors",
     prepareHeaders: headers => {
         headers.set('Content-Type', 'application/json;charset=UTF-8');
         return headers;

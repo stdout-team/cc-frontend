@@ -42,7 +42,7 @@ export const EventWidget = () => {
     const inputRef = useRef<InputRef>(null);
     const editInputRef = useRef<InputRef>(null);
     const {data, error, isLoading} = useGetEventsQuery(requestData, {skip: false});
-
+    console.log(data)
     const onChangeDaysButtonHandler = (e: RadioChangeEvent) => {
         switch (e?.target?.value) {
             case "d":
