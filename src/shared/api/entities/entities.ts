@@ -20,7 +20,7 @@ export interface Photo {
 
 export interface Location {
     place: string
-    coords: number[]
+    coords: [number, number]
 }
 
 export interface Events {
