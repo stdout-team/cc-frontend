@@ -35,7 +35,7 @@ export const TagsGroup = ({tagsData, withSwipe, onChange}: TagsGroup) => {
     return (
         <>
             <Space size={[4, 8]} wrap>
-                {tags.map((tag) => (
+                {tags && tags.map((tag) => (
                     <CheckableTag
                         key={tag}
                         checked={selectedTags.includes(tag)}

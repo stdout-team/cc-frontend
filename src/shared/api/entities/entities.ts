@@ -46,5 +46,5 @@ export interface InterestsResponse extends Base {
 }
 
 export interface InterestsRequest {
-    search: string
+    search?: string
 }
