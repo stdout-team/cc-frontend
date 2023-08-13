@@ -32,6 +32,8 @@ export interface Events {
     updated: string,
     photo: Photo,
     interests: string[]
+    description: string,
+    countMeIn: number
 }
 
 export interface EventsResponse extends Base {
