@@ -23,7 +23,7 @@ export const Card = ({id, date, place, tags, title, imgLink}: CardProps) => {
                 <Title style={{margin: 0}} level={5}>{title}</Title>
                 <Text>{date}</Text>
                 <Text>{place}</Text>
-                <Space size={[1, 1]} wrap>
+                <Space size={[1, 6]} wrap>
                     {tags.map((tag) => (
                         <Tag
                             bordered={false}

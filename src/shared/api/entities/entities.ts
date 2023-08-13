@@ -5,7 +5,7 @@ export interface Base {
 }
 
 export interface EventsRequest {
-    interests: string
+    interests: string[]
     minDate: string
     maxDate: string
     orderBy: orderBy
@@ -20,7 +20,7 @@ export interface Photo {
 
 export interface Location {
     place: string
-    coords: number[]
+    coords: [number, number]
 }
 
 export interface Events {
@@ -30,11 +30,12 @@ export interface Events {
     location: Location,
     announced: string,
     updated: string,
-    photo: Photo
+    photo: Photo,
+    interests: string[]
 }
 
 export interface EventsResponse extends Base {
-    events: Events
+    events: Events[]
 }
 
 

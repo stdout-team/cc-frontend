@@ -6,7 +6,6 @@ export const Interests = commonApi.injectEndpoints({
         getInterests: build.query<InterestsResponse, InterestsRequest>({
             query: (arg) => ({
                 url: "/interests",
-                params: arg
             })
         })
     }),

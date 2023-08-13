@@ -10,7 +10,6 @@ export const HeaderWidget = () => {
             <Col span={18} offset={1}>
                 <div style={{display: "flex", justifyContent: "space-between"}}>
                     <Text>Привет, Екатеринбург!</Text>
-                    <Search placeholder="Найти событие" onSearch={onSearch} style={{width: 200}}/>
                 </div>
                 <Divider/>
             </Col>

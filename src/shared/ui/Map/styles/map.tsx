@@ -1,7 +1,10 @@
 import {load} from '@2gis/mapgl';
-import React, {Dispatch, ReactElement, useEffect} from "react";
-import {renderToStaticMarkup} from "react-dom/server";
-import {Map} from "@2gis/mapgl/types";
+import React, {Dispatch, ReactDOM, ReactElement, useEffect, useState} from "react";
+import {HtmlMarker, Map} from "@2gis/mapgl/types";
+import dynamic from "next/dynamic";
+
+// eslint-disable-next-line react/no-deprecated
+import {render} from "react-dom";
 
 interface Popup {
     position: [number, number];
@@ -18,22 +21,45 @@ interface MapProps {
     height: string;
 }
 
+interface InnerMapProps extends MapProps {
+    onMapLoad: (map: Map) => void
+}
+
 const MapContext = React.createContext<[Map | undefined, Dispatch<React.SetStateAction<Map | undefined>>]>([undefined, () => {
 }]);
 
 
-export const MapProvider = (props: MapProps) => {
+export const MapProvider = dynamic(() => Promise.resolve((props: MapProps) => {
     const [mapInstance, setMapInstance] = React.useState<Map | undefined>();
-    useMap(props)
+    const instance = useMap({...props, onMapLoad: setMapInstance})
+    const [popups, setPopups] = useState<HtmlMarker[]>([])
+    useEffect(() => {
+        if (mapInstance) {
+            load().then((mapAPI) => {
+                popups.map(p => p.destroy())
+                const popupElements: HtmlMarker[] = []
+                props.popups.map((popup) => {
+                    const container = document.createElement('div');
+                    render(popup.component, container)
+                    console.log(container.innerHTML)
+                    popupElements.push(new mapAPI.HtmlMarker(mapInstance, {
+                        coordinates: popup.position,
+                        html: container.innerHTML,
+                    }));
+                })
+                setPopups(popupElements)
+            })
+        }
+    }, [props.popups])
     return (
         <MapContext.Provider value={[mapInstance, setMapInstance]}>
             <div id='map-container' style={{width: props.width, height: props.height}}/>
         </MapContext.Provider>
     );
-};
+}), {ssr: false})
 
 
-export const useMap = ({center, zoom, popups, gisKey}: MapProps) => {
+export const useMap = ({center, zoom, popups, gisKey, onMapLoad}: InnerMapProps) => {
     const [mapInstance, setMapInstance] = React.useContext(MapContext);
     useEffect(() => {
         if (typeof window === 'undefined') return
@@ -48,13 +74,8 @@ export const useMap = ({center, zoom, popups, gisKey}: MapProps) => {
                     key: gisKey,
                 });
 
-                popups.map((popup) => {
-                    new mapAPI.HtmlMarker(map, {
-                        coordinates: popup.position,
-                        html: renderToStaticMarkup(popup.component),
-                    });
-                })
-                setMapInstance(map)
+
+                onMapLoad(map)
             }, 0)
         });
 
@@ -62,5 +83,5 @@ export const useMap = ({center, zoom, popups, gisKey}: MapProps) => {
             map && map.destroy();
         }
     }, []);
-
-};
+    return mapInstance
+}

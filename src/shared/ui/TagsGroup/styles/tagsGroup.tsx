@@ -28,6 +28,10 @@ export const TagsGroup = ({tagsData, withSwipe, onChange}: TagsGroup) => {
         }
     }, [selectedTags])
 
+    useEffect(() => {
+        setTags(tagsData)
+    }, [tagsData])
+
     return (
         <>
             <Space size={[4, 8]} wrap>
