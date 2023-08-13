@@ -24,7 +24,7 @@ export const CardWithControl = (props: CardProps) => {
         setShowForm(!showForm)
     }
     return deleted ? <></> : (
-        <CardStyled id={cardData.id}>
+        <CardStyled id={cardData.id} style={showForm ? {height: "450px"} : {}}>
             <CardTop>
                 <CardImage>
                     <img src={cardData.imgLink}/>
