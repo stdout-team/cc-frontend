@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useMemo, useRef, useState} from "react";
 import {Events, EventsRequest} from "@/shared/api/entities/entities";
 import {Col, DatePicker, InputRef, Radio, RadioChangeEvent, Row, Space} from "antd";
 import {useGetInterestsQuery} from "@/shared/api/interests/interests";
@@ -6,6 +6,7 @@ import {useGetEventsQuery} from "@/shared/api/events/events";
 import TagsGroup from "@/shared/ui/TagsGroup";
 import {RangePickerProps} from "antd/es/date-picker";
 import dayjs from "dayjs";
+import {mockEvents} from "@/shared/mock/events";
 
 const convertDate = (date: Date) => {
     const dd = String(date.getDate()).padStart(2, '0');
@@ -31,13 +32,9 @@ export function SearchPanel({setEvents}: { setEvents: (events: Events[]) => void
     const [editInputValue, setEditInputValue] = useState('');
     const [requestData, setRequestData] = useState<EventsRequest>({orderBy: "orderByPopularity"} as EventsRequest);
     const editInputRef = useRef<InputRef>(null);
-    const {
-        data: tagsData,
-        error: tagsError,
-        isLoading: isTagsLoading
-    } = useGetInterestsQuery({search: ''}, {skip: false});
+    const tagsData = {interests: Array.from(new Set(mockEvents.reduce((tags, event) => [...tags, ...event.interests], [] as string[])))};
     console.log(tagsData)
-    const {data, error, isLoading} = useGetEventsQuery(requestData, {skip: !requestData?.interests?.length});
+    const data = useMemo(() => ({events: mockEvents.filter(e => !requestData?.interests || requestData.interests.every(si => e.interests.includes(si)))}), [requestData?.interests]);
     const onChangeDaysButtonHandler = (e: RadioChangeEvent) => {
         switch (e?.target?.value) {
             case "month":

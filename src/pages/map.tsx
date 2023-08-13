@@ -35,7 +35,7 @@ export default function Home() {
                                          width="100%"
                                          height="750px"
                                          popups={events.map(event => ({
-                                             position: [event.location.coords[1], event.location.coords[0]],
+                                             position: event.location.coords,
                                              component: <PopupCard
                                                  onClick={() => 1}
                                                  likes={event.countMeIn}

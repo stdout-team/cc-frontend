@@ -44,6 +44,7 @@ export const Card = ({id, date, place, tags, title, imgLink, onClick, likes}: Ca
 const CardStyled = styled('div')`
   display: flex;
   width: 240px;
+  z-index: 999 !important;
   position: relative;
   flex-direction: column;
   border-radius: 2px;
