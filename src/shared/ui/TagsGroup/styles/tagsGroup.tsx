@@ -1,4 +1,4 @@
-import {Space, Tag} from 'antd';
+import {Space, Tag, Typography} from 'antd';
 import {useEffect, useState} from "react";
 
 const {CheckableTag} = Tag;
@@ -9,6 +9,8 @@ interface TagsGroup {
     onChange?: (e: string[]) => void
 }
 
+const {Text} = Typography;
+
 export const TagsGroup = ({tagsData, withSwipe, onChange}: TagsGroup) => {
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [tags, setTags] = useState<string[]>(tagsData);
@@ -17,10 +19,7 @@ export const TagsGroup = ({tagsData, withSwipe, onChange}: TagsGroup) => {
             ? [tag, ...selectedTags]
             : selectedTags.filter((t) => t !== tag);
         setSelectedTags(nextSelectedTags);
-        if (withSwipe) {
-            checked ? setTags([...selectedTags, tag, ...tags.filter(value => value !== tag && !selectedTags.includes(value))]) :
-                setTags([...tags.filter(value => value !== tag), tag]);
-        }
+
     };
     useEffect(() => {
         if (selectedTags.length !== 0 && onChange) {
@@ -32,6 +31,7 @@ export const TagsGroup = ({tagsData, withSwipe, onChange}: TagsGroup) => {
         setTags(tagsData)
     }, [tagsData])
 
+    console.log(tagsData, tagsData.length, tags, tags.length)
     return (
         <>
             <Space size={[4, 8]} wrap>
@@ -41,7 +41,7 @@ export const TagsGroup = ({tagsData, withSwipe, onChange}: TagsGroup) => {
                         checked={selectedTags.includes(tag)}
                         onChange={(checked) => handleChange(tag, checked)}
                     >
-                        {tag}
+                        <Text style={{filter: selectedTags.includes(tag) ? 'invert()' : ''}}>{tag}</Text>
                     </CheckableTag>
                 ))}
             </Space>

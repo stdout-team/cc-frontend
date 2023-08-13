@@ -1,5 +1,6 @@
 import {Space, Tag, Typography} from 'antd';
 import styled from "styled-components";
+import {HeartFilled} from "@ant-design/icons";
 
 export interface CardProps {
     id?: string
@@ -8,13 +9,16 @@ export interface CardProps {
     tags: string[]
     title: string
     imgLink: string
+    onClick: () => void
+    likes: number
 }
 
 const {Title, Text} = Typography;
-export const Card = ({id, date, place, tags, title, imgLink}: CardProps) => {
+export const Card = ({id, date, place, tags, title, imgLink, onClick, likes}: CardProps) => {
     return (
-        <CardStyled id={id}>
+        <CardStyled id={id} onClick={onClick}>
             <CardTop>
+                <div className='likes'><HeartFilled/><Text>{likes}</Text></div>
                 <CardImage>
                     <img src={imgLink}/>
                 </CardImage>
@@ -73,4 +77,19 @@ const CardTop = styled('div')`
   flex: 0 0 134px;
   position: relative;
   overflow: hidden;
+  
+  & .likes {
+    display: flex;
+    gap: 5px;
+    background: red;
+    border-radius: 15px;
+    height: 20px;
+    width: max-content;
+    padding: 5px;
+    align-items: center;
+    margin: 5px;
+    & > * {
+      filter: invert();
+    }
+  }
 `;

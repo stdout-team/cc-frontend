@@ -3,5 +3,5 @@ export function DateToRu(date: string) {
         year: "numeric",
         month: "long",
         day: "numeric"
-    }).replace('г.', '')
+    }).replace(' г.', '')
 }

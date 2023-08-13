@@ -22,7 +22,7 @@ export default function Home() {
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
-            <div style={{display: 'none'}}><Card title='' date='' tags={[]} place='' imgLink=''/></div>
+            <div style={{display: 'none'}}><Card onClick={() => 1} likes={0} title='' date='' tags={[]} place='' imgLink=''/></div>
             <HeaderWidget/>
             <Row justify="center">
                 <Col span={18} offset={1}>
@@ -33,10 +33,12 @@ export default function Home() {
                             <Row gutter={[21, 24]}>
                                     <Map gisKey='042b5b75-f847-4f2a-b695-b5f58adc9dfd'
                                          width="100%"
-                                         height="500px"
+                                         height="750px"
                                          popups={events.map(event => ({
-                                             position: [60.613589, 56.843085],
+                                             position: [event.location.coords[1], event.location.coords[0]],
                                              component: <PopupCard
+                                                 onClick={() => 1}
+                                                 likes={event.countMeIn}
                                                  id={event.id}
                                                  date={`${DateToRu(event.schedule[0][0])} ${event.schedule.length > 1 ? '+' + (event.schedule.length - 1) : ''}`}
                                                  place={event.location.place}

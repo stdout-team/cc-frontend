@@ -7,7 +7,7 @@ import dynamic from "next/dynamic";
 import {render} from "react-dom";
 
 interface Popup {
-    position: [number, number];
+    position: number[];
     component: ReactElement
 }
 
