@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@2gis/mapgl@^1.38.1":
+  version "1.38.1"
+  resolved "https://registry.yarnpkg.com/@2gis/mapgl/-/mapgl-1.38.1.tgz#27169a6378493c221fd1cd24922ec2a52c7ba51f"
+  integrity sha512-4u4exTZetmdI+0Z74m8ZaOic8vEM8NtaDBBtEUCgFn1NheGsCWg2s3QCBXn6YVeFxSwKhKM72/ncYcBwa/t+rw==
+  dependencies:
+    "@types/geojson" "^7946.0.7"
+
 "@aashutoshrathi/word-wrap@^1.2.3":
   version "1.2.6"
   resolved "https://registry.yarnpkg.com/@aashutoshrathi/word-wrap/-/word-wrap-1.2.6.tgz#bd9154aec9983f77b3a034ecaa015c2e4201f6cf"
@@ -1395,6 +1402,11 @@
   integrity sha512-sJ902EfIzn1Fa+qYmjdQqh8tPsoxyBz+8yBKC2HKUxyezKJFwPGOn7pv4WY6QuQW//ySQi5lJjA/ZT9sNWWNTg==
   dependencies:
     tslib "^2.4.0"
+
+"@types/geojson@^7946.0.7":
+  version "7946.0.10"
+  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.10.tgz#6dfbf5ea17142f7f9a043809f1cd4c448cb68249"
+  integrity sha512-Nmh0K3iWQJzniTuPRcJn5hxXkfB1T1pgB89SBig5PlJQU5yocazeu4jATJlaA0GYFKWMqDdvYemoSnF2pXgLVA==
 
 "@types/hoist-non-react-statics@^3.3.1":
   version "3.3.1"

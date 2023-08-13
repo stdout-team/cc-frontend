@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@2gis/mapgl": "^1.38.1",
     "@reduxjs/toolkit": "^1.9.5",
     "@types/node": "20.4.10",
     "@types/react": "18.2.20",
