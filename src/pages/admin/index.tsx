@@ -5,7 +5,7 @@ import {EventEditWidget} from "@/widgets/EventEditWidget";
 import {MainTabsWidget} from "@/widgets/MainTabsWidget";
 import EventWidget from "@/widgets/EventWidget";
 
-export default function Home() {
+export default function Admin() {
     return (
         <>
             <HeaderWidget/>

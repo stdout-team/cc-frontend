@@ -23,61 +23,61 @@ export const CardWithControl = (props: CardProps) => {
         }
         setShowForm(!showForm)
     }
-    return (
+    return deleted ? <></> : (
         <CardStyled id={cardData.id}>
-            {!deleted && <> <CardTop>
+            <CardTop>
                 <CardImage>
                     <img src={cardData.imgLink}/>
                 </CardImage>
             </CardTop>
-                <CardBody>
-                    {showForm ?
-                        <Form
-                            form={form}
-                            name="wrap"
-                            labelAlign="left"
-                            wrapperCol={{flex: 1}}
-                            colon={false}
-                            onFinish={editButtonHandler}
-                            style={{maxWidth: 240}}
-                        >
-                            <Form.Item name="title" rules={[{required: true}]}>
-                                <Input defaultValue={cardData.title}/>
-                            </Form.Item>
+            <CardBody>
+                {showForm ?
+                    <Form
+                        form={form}
+                        name="wrap"
+                        labelAlign="left"
+                        wrapperCol={{flex: 1}}
+                        colon={false}
+                        onFinish={editButtonHandler}
+                        style={{maxWidth: 240}}
+                    >
+                        <Form.Item name="title" rules={[{required: true}]}>
+                            <Input defaultValue={cardData.title}/>
+                        </Form.Item>
 
-                            <Form.Item name="place" rules={[{required: true}]}>
-                                <Input defaultValue={cardData.place}/>
-                            </Form.Item>
-                            <Form.Item name="date" rules={[{required: true}]}>
-                                <Input defaultValue={cardData.date}/>
-                            </Form.Item>
-                            <Form.Item name="tags" rules={[{required: true}]}>
-                                <TagsGroupWithAddRemove onChange={e => setNewTags(e)} tagsData={cardData.tags}/>
-                            </Form.Item>
-                        </Form> : <>
-                            <Title style={{margin: 0}} level={5}>{cardData.title}</Title>
-                            <Text>{cardData.place}</Text>
-                            <Text>{cardData.date}</Text>
-                            <Space size={[1, 1]} wrap>
-                                {cardData.tags.map((tag) => (
-                                    <Tag
-                                        bordered={false}
-                                        key={tag}>
-                                        {tag}
-                                    </Tag>
-                                ))}
-                            </Space></>}
-                    <div>
-                        <Divider style={{margin: "8px 0 4px 0"}}/>
-                        <Button htmlType="submit" onClick={editButtonHandler} size="small" type="default"
-                                style={{width: 96, border: "none", boxShadow: "none"}}
-                                icon={showForm ? <CheckOutlined/> : <EditOutlined/>}/>
+                        <Form.Item name="place" rules={[{required: true}]}>
+                            <Input defaultValue={cardData.place}/>
+                        </Form.Item>
+                        <Form.Item name="date" rules={[{required: true}]}>
+                            <Input defaultValue={cardData.date}/>
+                        </Form.Item>
+                        <Form.Item name="tags" rules={[{required: true}]}>
+                            <TagsGroupWithAddRemove onChange={e => setNewTags(e)} tagsData={cardData.tags}/>
+                        </Form.Item>
+                    </Form> : <>
+                        <Title style={{margin: 0}} level={5}>{cardData.title}</Title>
+                        <Text>{cardData.place}</Text>
+                        <Text>{cardData.date}</Text>
+                        <Space size={[1, 1]} wrap>
+                            {cardData.tags.map((tag) => (
+                                <Tag
+                                    bordered={false}
+                                    key={tag}>
+                                    {tag}
+                                </Tag>
+                            ))}
+                        </Space></>}
+                <div>
+                    <Divider style={{margin: "8px 0 4px 0"}}/>
+                    <Button htmlType="submit" onClick={editButtonHandler} size="small" type="default"
+                            style={{width: 96, border: "none", boxShadow: "none"}}
+                            icon={showForm ? <CheckOutlined/> : <EditOutlined/>}/>
 
-                        <Button onClick={() => setDeleted(true)} size="small" type="default"
-                                style={{width: 96, border: "none", boxShadow: "none"}}
-                                icon={<DeleteOutlined/>}/>
-                    </div>
-                </CardBody></>}
+                    <Button onClick={() => setDeleted(true)} size="small" type="default"
+                            style={{width: 96, border: "none", boxShadow: "none"}}
+                            icon={<DeleteOutlined/>}/>
+                </div>
+            </CardBody>
         </CardStyled>
     );
 }
